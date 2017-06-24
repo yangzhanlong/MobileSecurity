@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mobile Security</string>
+    <string name="version_name">版本:</string>
+    <string name="next_time_update">下次再说</string>
+    <string name="update_now">立刻更新</string>
+    <string name="check_new_version">检测到新版本</string>
+</resources>
