@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/home_iv_logo"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/heima"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/heima" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,14 +29,14 @@
             android:layout_toRightOf="@id/home_iv_logo">
 
             <TextView
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:text="@string/title_safe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"/>
 
             <org.me.mobilesecurity.view.MarqueeTextView
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:layout_marginTop="5dp"
                 android:textColor="#ff0000"
                 android:text="@string/content_safe"
@@ -55,4 +55,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
+
+    <!-- 下部分 -->
+    <GridView
+        android:id="@+id/home_gridview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:numColumns="2">
+    </GridView>
 </LinearLayout>
