@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Mobile Security</string>
+    <string name="app_name">MobileSecurity</string>
     <string name="version_name">版本:</string>
     <string name="next_time_update">下次再说</string>
     <string name="update_now">立刻更新</string>
     <string name="check_new_version">检测到新版本</string>
+    <string name="deny_perm">您拒绝了权限</string>
+    <string name="error_104">Error:104</string>
+    <string name="error_103">Error:103</string>
+    <string name="error_101">Error:101</string>
+    <string name="error_102">Error:102</string>
 </resources>
