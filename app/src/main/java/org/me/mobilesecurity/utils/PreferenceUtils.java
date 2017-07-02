@@ -32,4 +32,21 @@ public class PreferenceUtils {
         editor.putBoolean(key, value);
         editor.commit();
     }
+
+    public static String getString(Context context, String key) {
+        return getString(context, key, null);
+    }
+
+    public static String getString(Context context, String key,
+                                   String defValue) {
+        SharedPreferences preferences = getPreferences(context);
+        return preferences.getString(key, defValue);
+    }
+
+    public static void setString(Context context, String key, String value) {
+        SharedPreferences preferences = getPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
 }

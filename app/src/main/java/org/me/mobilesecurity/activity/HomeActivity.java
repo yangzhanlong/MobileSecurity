@@ -3,21 +3,29 @@ package org.me.mobilesecurity.activity;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.me.mobilesecurity.R;
 import org.me.mobilesecurity.bean.HomeBean;
+import org.me.mobilesecurity.utils.Config;
+import org.me.mobilesecurity.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ImageView ivLogon;
     private GridView mGridView;
@@ -59,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private void initView() {
         ivLogon = (ImageView) findViewById(R.id.home_iv_logo);
         mGridView = (GridView) findViewById(R.id.home_gridview);
+        mGridView.setOnItemClickListener(this);
     }
 
     private void initGridViewData() {
@@ -94,6 +103,134 @@ public class HomeActivity extends AppCompatActivity {
     public void clickSetting(View view) {
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                clickSjfd();
+                break;
+        }
+    }
+
+    // 点击手机防盗
+    private void clickSjfd() {
+        // 检查是否有存储过密码
+        String pwd = PreferenceUtils.getString(this, Config.SJFD_PWD, null);
+
+        if (!TextUtils.isEmpty(pwd)) {
+            // 如果有设置过密码，进入输入密码框
+            showPwdEnterDialog();
+        } else {
+            // 如果没有设置过密码，进入设置密码框
+            showPwdSettingDialog();
+        }
+    }
+
+    // 设置密码对话框
+    private void showPwdSettingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.dialog_pwd_setting, null);
+        builder.setCancelable(false);
+        builder.setView(view);
+        final AlertDialog dialog = builder.show();
+
+        final EditText etPwd = (EditText) view.findViewById(R.id.dialog_et_pwd);
+        final EditText etConfirm = (EditText) view.findViewById(R.id.dialog_et_confirm);
+
+        Button btnOk = (Button) view.findViewById(R.id.dialog_btn_ok);
+        Button btnCancel = (Button) view.findViewById(R.id.dialog_btn_cancel);
+
+        // 取消
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        // 确定
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pwd = etPwd.getText().toString().trim();
+                if (TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(HomeActivity.this, R.string.p_input_pwd, Toast.LENGTH_SHORT).show();
+                    etPwd.requestFocus();
+                    return;
+                }
+
+                String confirm = etConfirm.getText().toString().trim();
+                if (TextUtils.isEmpty(confirm)) {
+                    Toast.makeText(HomeActivity.this, R.string.p_input_confirm_pwd, Toast.LENGTH_SHORT).show();
+                    etConfirm.requestFocus();
+                    return;
+                }
+
+                if (!pwd.trim().equals(confirm.trim())) {
+                    Toast.makeText(HomeActivity.this, R.string.pwd_not_same, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                PreferenceUtils.setString(HomeActivity.this, Config.SJFD_PWD, pwd.trim());
+                dialog.dismiss();
+
+                // 进入设置向导界面
+            }
+        });
+    }
+
+    // 密码输入框
+    private void showPwdEnterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.dialog_pwd_enter, null);
+        builder.setCancelable(false);
+        builder.setView(view);
+        final AlertDialog dialog = builder.show();
+
+        final EditText etPwd = (EditText) view.findViewById(R.id.dialog_et_pwd);
+
+        Button btnOk = (Button) view.findViewById(R.id.dialog_btn_ok);
+        Button btnCancel = (Button) view.findViewById(R.id.dialog_btn_cancel);
+
+        // 取消
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        // 确定
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 判断密码是否为空
+                String pwd = etPwd.getText().toString().trim();
+                if (TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(HomeActivity.this, R.string.p_input_pwd, Toast.LENGTH_SHORT).show();
+                    etPwd.requestFocus();
+                    return;
+                }
+
+                // 判断密码是否正确
+                String save_pwd = PreferenceUtils.getString(HomeActivity.this, Config.SJFD_PWD);
+                if (!pwd.trim().equals(save_pwd)) {
+                    Toast.makeText(HomeActivity.this, R.string.error_pwd, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dialog.dismiss();
+                // 判断是否设置过设置向导
+                boolean flag = PreferenceUtils.getBoolean(HomeActivity.this, Config.KEY_SJFD_SETUP);
+                if (flag) {
+                    // 进入手机防盗界面
+                } else {
+                    // 进入设置向导界面
+                }
+            }
+        });
     }
 
     private class HomeAdapter extends BaseAdapter {

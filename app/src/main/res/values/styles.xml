@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BtnOkNormal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_ok_selector</item>
+        <item name="android:textColor">@color/btn_ok_textcolor</item>
+    </style>
+
+    <style name="BtnCancelNormal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_cancel_selector</item>
+    </style>
 </resources>
