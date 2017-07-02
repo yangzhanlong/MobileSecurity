@@ -24,7 +24,9 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.me.mobilesecurity.R;
+import org.me.mobilesecurity.utils.Config;
 import org.me.mobilesecurity.utils.PackageUtils;
+import org.me.mobilesecurity.utils.PreferenceUtils;
 import org.me.mobilesecurity.utils.StreamUtils;
 
 import java.io.File;
@@ -55,6 +57,9 @@ public class SplashActivity extends AppCompatActivity {
                     showSafeUpdateDialog(bundle.getString("content"),
                             bundle.getFloat("versionName"));
                     break;
+                case WHAT_SHOW_ERROR:
+                    Toast.makeText(SplashActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+                    loadToHome();
             }
         }
     };
@@ -67,7 +72,15 @@ public class SplashActivity extends AppCompatActivity {
         mTvVersion = (TextView) findViewById(R.id.splash_tv_version);
         mTvVersion.setText(getString(R.string.version_name) + PackageUtils.getVersionName(this));
 
-        checkVersionUpdate();
+        // 如果设置了自动更新
+        boolean flag = PreferenceUtils.getBoolean(this, Config.KEY_AUTO_UPDATE,
+                true);
+        if (flag) {
+            // 版本更新检测
+            checkVersionUpdate();
+        } else {
+            loadToHome();
+        }
     }
 
     private void checkVersionUpdate() {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.me.mobilesecurity.activity.SettingActivity"
+    xmlns:itheima="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:background="@color/title_bg"
+        android:text="@string/setting_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:id="@+id/setting_siv_autoupdate"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:sivText="自动更新设置"
+        itheima:sivBackground="start">
+    </org.me.mobilesecurity.view.SettingItemView>
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:sivText="骚扰拦截设置"
+        itheima:sivBackground="middle">
+    </org.me.mobilesecurity.view.SettingItemView>
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:sivText="锁屏自动清理内存"
+        itheima:sivBackground="end">
+    </org.me.mobilesecurity.view.SettingItemView>
+</LinearLayout>

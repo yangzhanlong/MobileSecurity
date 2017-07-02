@@ -1,6 +1,7 @@
 package org.me.mobilesecurity.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -91,6 +92,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void clickSetting(View view) {
+        Intent intent = new Intent(this, SettingActivity.class);
+        startActivity(intent);
     }
 
     private class HomeAdapter extends BaseAdapter {
