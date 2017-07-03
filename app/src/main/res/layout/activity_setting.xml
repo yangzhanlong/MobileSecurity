@@ -9,13 +9,8 @@
     xmlns:itheima="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
-        android:background="@color/title_bg"
-        android:text="@string/setting_title"
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        style="@style/TitleBarStyle"
+        android:text="@string/setting_title"/>
 
     <org.me.mobilesecurity.view.SettingItemView
         android:id="@+id/setting_siv_autoupdate"

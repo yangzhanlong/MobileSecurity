@@ -177,8 +177,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 dialog.dismiss();
 
                 // 进入设置向导界面
+                enterSetup1();
             }
         });
+    }
+
+    private void enterSetup1() {
+        Intent intent = new Intent(this, SetupActivity1.class);
+        startActivity(intent);
     }
 
     // 密码输入框
@@ -228,6 +234,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     // 进入手机防盗界面
                 } else {
                     // 进入设置向导界面
+                    enterSetup1();
                 }
             }
         });

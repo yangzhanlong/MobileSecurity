@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setup1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.me.mobilesecurity.activity.SetupActivity1">
+
+    <TextView
+        style="@style/SetupTitleStyle"
+        android:text="@string/sjfd_setup_title_1" />
+
+    <TextView
+        style="@style/TextNormal"
+        android:layout_margin="5dp"
+        android:text="@string/sjdf_setup_text_1" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="@string/sjdf_setup_sim_text" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="@string/sjfd_setup_gps_text" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="@string/sjfd_setup_remote_lock_text" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="@string/sjfd_setup_remote_distory_text" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/step_1" />
+
+        <Button
+            style="@style/SetupBtnNextStyle"
+            android:text="@string/tv_next" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/point_select" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

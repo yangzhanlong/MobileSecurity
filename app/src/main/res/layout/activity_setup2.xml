@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setup1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.me.mobilesecurity.activity.SetupActivity1">
+
+    <TextView
+        style="@style/SetupTitleStyle"
+        android:text="2.手机卡绑定" />
+
+    <TextView
+        style="@style/TextNormal"
+        android:layout_margin="5dp"
+        android:text="通过绑定SIM卡:\n下次手机重启时如果发现SIM变化,就会发送报警短信" />
+
+    <RelativeLayout
+        android:id="@+id/setup2_rl_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/btn_ok_selector"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="点击绑定/解绑SIM卡"
+            android:textColor="@color/btn_ok_textcolor" />
+
+        <ImageView
+            android:id="@+id/setup2_iv_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/unlock" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/step_2" />
+
+        <Button style="@style/SetupBtnNextStyle" />
+
+        <Button style="@style/SetupBtnBackStyle" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_select" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/point_normal" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

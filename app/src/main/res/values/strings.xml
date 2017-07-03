@@ -22,4 +22,11 @@
     <string name="pwd_not_same">两次密码不一致</string>
     <string name="check_sjfd_pwd">密码验证</string>
     <string name="error_pwd">输入密码不正确</string>
+    <string name="sjfd_setup_title_1">1.欢迎使用手机防盗</string>
+    <string name="sjdf_setup_text_1">您的手机防盗卫士:</string>
+    <string name="sjdf_setup_sim_text">SIM卡变更报警</string>
+    <string name="sjfd_setup_gps_text">GPS追踪</string>
+    <string name="sjfd_setup_remote_lock_text">远程锁屏</string>
+    <string name="sjfd_setup_remote_distory_text">远程销毁数据</string>
+    <string name="tv_next">下一步</string>
 </resources>

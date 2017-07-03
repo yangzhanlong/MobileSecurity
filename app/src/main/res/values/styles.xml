@@ -9,7 +9,7 @@
     </style>
 
     <style name="BtnOkNormal">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/btn_ok_selector</item>
         <item name="android:textColor">@color/btn_ok_textcolor</item>
@@ -19,5 +19,47 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/btn_cancel_selector</item>
+    </style>
+
+    <style name="TitleBarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@color/title_bg</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SetupTitleStyle" parent="TitleBarStyle">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="TextNormal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#B8B6B8</item>
+    </style>
+
+    <style name="SetupTextItemStyle" parent="TextNormal">
+        <item name="android:textSize">14sp</item>
+        <item name="android:drawableLeft">@mipmap/dialog_title_default_icon</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="SetupBtnNextStyle" parent="BtnOkNormal">
+        <item name="android:drawableRight">@mipmap/next</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:onClick">clickNext</item>
+        <item name="android:text">下一步</item>
+    </style>
+
+    <style name="SetupBtnBackStyle" parent="BtnOkNormal">
+        <item name="android:drawableLeft">@mipmap/pre</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:onClick">clickBack</item>
+        <item name="android:text">上一步</item>
     </style>
 </resources>
