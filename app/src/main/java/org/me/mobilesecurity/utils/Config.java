@@ -8,4 +8,5 @@ public interface Config {
     String SJFD_PWD = "sjfd_pwd";
     String KEY_SJFD_SETUP = "sjfd_setup";
     String KEY_SJFD_SIM = "sjfd_sim";
+    String KEY_SJFD_NUM = "sjfd_num";
 }

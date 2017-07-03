@@ -31,7 +31,7 @@ public class SetupActivity2 extends BaseSetUpActivity implements View.OnClickLis
         initView();
         initEvent();
     }
-    
+
 //    // 下一步
 //    public void clickNext(View view) {
 //        Intent intent = new Intent(this, SetupActivity3.class);
