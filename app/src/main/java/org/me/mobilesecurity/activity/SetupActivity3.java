@@ -1,5 +1,6 @@
 package org.me.mobilesecurity.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import org.me.mobilesecurity.utils.PreferenceUtils;
 
 public class SetupActivity3 extends BaseSetUpActivity {
 
+    private static final int REQUEST_NUMBER = 100;
     private EditText et_number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,19 @@ public class SetupActivity3 extends BaseSetUpActivity {
     }
 
     public void clickContact(View view) {
+        Intent intent = new Intent(this, ContactSelectActivity.class);
+        startActivityForResult(intent, REQUEST_NUMBER);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_NUMBER && resultCode == Activity.RESULT_OK) {
+            String number = data.getStringExtra("number");
+            et_number.setText(number);
+            // 使光标到号码末尾
+            if (!TextUtils.isEmpty(number)) {
+                et_number.setSelection(number.length());
+            }
+        }
     }
 }
