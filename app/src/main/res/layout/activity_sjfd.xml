@@ -1,13 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sjfd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="org.me.mobilesecurity.activity.SjfdActivity">
 
-</RelativeLayout>
+
+    <TextView
+        style="@style/TitleBarStyle"
+        android:text="手机防盗" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp">
+
+        <TextView
+            style="@style/TextNormal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="安全号码" />
+
+        <TextView
+            android:id="@+id/sjfd_tv_number"
+            style="@style/TextNormal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:text="xxxxxx" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#33000000">
+        </View>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/sjfd_rl_protecting"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/item_click_selector">
+
+        <TextView
+            style="@style/TextNormal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="防盗保护是否开启" />
+
+        <ImageView
+            android:id="@+id/sjfd_iv_protecting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/lock" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#33000000">
+        </View>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sjfd_rl_setup"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/item_click_selector">
+
+        <TextView
+            style="@style/TextNormal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="重新进入设置向导页面" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#33000000">
+        </View>
+    </RelativeLayout>
+
+    <TextView
+        style="@style/TextNormal"
+        android:layout_width="match_parent"
+        android:background="#88000000"
+        android:padding="4dp"
+        android:text="功能介绍"
+        android:textColor="#ffffff" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="GPS追踪:#*location*#" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="远程销毁数据:#*wipedata*#" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="播放报警音乐:#*alarm*#" />
+
+    <TextView
+        style="@style/SetupTextItemStyle"
+        android:layout_margin="8dp"
+        android:text="远程锁屏:#*lockscreen*#" />
+</LinearLayout>

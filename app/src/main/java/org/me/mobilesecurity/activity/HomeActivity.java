@@ -117,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     // 点击手机防盗
     private void clickSjfd() {
         // 检查是否有存储过密码
-        String pwd = PreferenceUtils.getString(this, Config.SJFD_PWD, null);
+        String pwd = PreferenceUtils.getString(this, Config.KEY_SJFD_PWD, null);
 
         if (!TextUtils.isEmpty(pwd)) {
             // 如果有设置过密码，进入输入密码框
@@ -173,7 +173,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
 
-                PreferenceUtils.setString(HomeActivity.this, Config.SJFD_PWD, pwd.trim());
+                PreferenceUtils.setString(HomeActivity.this, Config.KEY_SJFD_PWD, pwd.trim());
                 dialog.dismiss();
 
                 // 进入设置向导界面
@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
                 // 判断密码是否正确
-                String save_pwd = PreferenceUtils.getString(HomeActivity.this, Config.SJFD_PWD);
+                String save_pwd = PreferenceUtils.getString(HomeActivity.this, Config.KEY_SJFD_PWD);
                 if (!pwd.trim().equals(save_pwd)) {
                     Toast.makeText(HomeActivity.this, R.string.error_pwd, Toast.LENGTH_SHORT).show();
                     return;
@@ -232,6 +232,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 boolean flag = PreferenceUtils.getBoolean(HomeActivity.this, Config.KEY_SJFD_SETUP);
                 if (flag) {
                     // 进入手机防盗界面
+                    Intent intent = new Intent(HomeActivity.this, SjfdActivity.class);
+                    startActivity(intent);
                 } else {
                     // 进入设置向导界面
                     enterSetup1();
