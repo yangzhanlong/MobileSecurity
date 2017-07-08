@@ -61,7 +61,8 @@ public class ContactSelectActivity extends AppCompatActivity implements AdapterV
             } else {
                 // 申请授权。
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CONTACTS,}, REQUEST_CODE);
+                        new String[]{Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS}, REQUEST_CODE);
             }
         } else {
             // 初始化数据

@@ -1,7 +1,10 @@
 package org.me.mobilesecurity.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -11,6 +14,7 @@ import org.me.mobilesecurity.utils.PreferenceUtils;
 
 public class SetupActivity5 extends BaseSetUpActivity {
 
+    private static final int REQUEST_CODE = 100;
     private CheckBox mCheckBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,34 @@ public class SetupActivity5 extends BaseSetUpActivity {
         // 存储设置过设置向导
         PreferenceUtils.setBoolean(this, Config.KEY_SJFD_SETUP, true);
 
-        Intent intent = new Intent(this, SjfdActivity.class);
-        startActivity(intent);
-        finish();
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SetupActivity5.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                 Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
+        } else {
+            Intent intent = new Intent(this, SjfdActivity.class);
+            startActivity(intent);
+            finish();
+        }
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(this, SjfdActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(this, R.string.deny_perm, Toast.LENGTH_SHORT).show();
+                }
+                return;
+        }
     }
 }

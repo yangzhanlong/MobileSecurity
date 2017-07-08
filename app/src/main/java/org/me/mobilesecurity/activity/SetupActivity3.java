@@ -36,20 +36,6 @@ public class SetupActivity3 extends BaseSetUpActivity {
         }
     }
 
-//    public void clickNext(View view) {
-//        Intent intent = new Intent(this, SetupActivity4.class);
-//        startActivity(intent);
-//        finish();
-//        overridePendingTransition(R.anim.next_enter, R.anim.next_exit);
-//    }
-//
-//    public void clickBack(View view) {
-//        Intent intent = new Intent(this, SetupActivity2.class);
-//        startActivity(intent);
-//        finish();
-//        overridePendingTransition(R.anim.back_enter, R.anim.back_exit);
-//    }
-
     @Override
     protected boolean performBack() {
         Intent intent = new Intent(this, SetupActivity2.class);
