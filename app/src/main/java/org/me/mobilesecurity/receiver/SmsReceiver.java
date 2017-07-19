@@ -1,12 +1,12 @@
 package org.me.mobilesecurity.receiver;
 
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 import org.me.mobilesecurity.R;
 import org.me.mobilesecurity.services.GPSService;
@@ -33,22 +33,36 @@ public class SmsReceiver extends BroadcastReceiver{
             // 判断发送号码是否是安全号码
             if (sender.equals(number)) {
                 if ("#*location*#".equals(content)) {
-                    Log.d(TAG, "GPS追踪");
                     Intent intent1 = new Intent(context, GPSService.class);
                     context.startService(intent1);
                 } else if ("#*wipedata*#".equals(content)) {
-                    Log.d(TAG, "远程消除数据");
+                    DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(
+                            Context.DEVICE_POLICY_SERVICE);
+                    dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE); //清理内部和外部存储
                 } else if ("#*alarm*#".equals(content)) {
-                    Log.d(TAG, "播放报警音乐");
                     MediaPlayer player = MediaPlayer.create(context, R.raw.alarm);
                     player.setLooping(true); // 设置循环
                     player.setVolume(1f, 1f); // 设置声音
                     player.start();
                 } else if (!"#*lockscreen*#".equals(content)
                         && content.startsWith("#*lockscreen*#")) {
-                    Log.d(TAG, "远程锁屏");
+                    DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(
+                            Context.DEVICE_POLICY_SERVICE);
+
+                    String password = content.substring("#*lockscreen*#".length());
+
+                    // 设置锁屏密码
+                    dpm.resetPassword(password, 0);
+                    // 锁屏
+                    dpm.lockNow();
+
                 } else if ("#*lockscreen*#".equals(content)) {
-                    Log.d(TAG, "远程锁屏");
+                    DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(
+                            Context.DEVICE_POLICY_SERVICE);
+
+                    // 默认密码
+                    dpm.resetPassword("123", 0);
+                    dpm.lockNow();
                 }
                 // 不让用户看到短信内容  现在已经不能使用了
                 abortBroadcast();

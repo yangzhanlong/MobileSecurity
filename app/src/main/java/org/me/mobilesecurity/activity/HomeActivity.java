@@ -111,6 +111,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             case 0:
                 clickSjfd();
                 break;
+            case 1:
+                clickSrlj();
+                break;
         }
     }
 
@@ -240,6 +243,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         });
+    }
+
+    // 骚扰拦截
+    private void clickSrlj() {
+        Intent intent = new Intent(this, CallSmsSafeActivity.class);
+        startActivity(intent);
     }
 
     private class HomeAdapter extends BaseAdapter {

@@ -15,12 +15,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,11 +67,28 @@
             </intent-filter>
         </receiver>
 
+        <!-- 设备管理员 -->
+        <receiver
+            android:name=".receiver.SjfdAdminReceiver"
+            android:description="@string/sample_device_admin_description"
+            android:label="@string/sample_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".services.GPSService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true" />
+
+        <activity android:name=".activity.CallSmsSafeActivity" />
+        <activity android:name=".activity.BlackEditActivity"></activity>
     </application>
 
 </manifest>

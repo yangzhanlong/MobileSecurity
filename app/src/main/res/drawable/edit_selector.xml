@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 控件可用，控件有焦点 -->
+    <item android:drawable="@drawable/edit_focus" android:state_enabled="true" android:state_focused="true"/>
+
+    <!-- 不可用 -->
+    <item android:drawable="@drawable/edit_normal" android:state_enabled="false"/>
+
+    <!-- 其他 -->
+    <item android:drawable="@drawable/edit_normal"/>
+</selector>
