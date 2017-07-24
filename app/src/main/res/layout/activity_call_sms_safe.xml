@@ -28,6 +28,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+        <LinearLayout
+            android:id="@+id/css_ll_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/loading_bg" />
+
+            <TextView
+                style="@style/TextNormal"
+                android:text="加载中..."/>
+
+        </LinearLayout>
+
         <ListView
             android:id="@+id/css_listview"
             android:layout_width="match_parent"

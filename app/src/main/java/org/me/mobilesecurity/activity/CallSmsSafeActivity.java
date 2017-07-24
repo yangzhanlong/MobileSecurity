@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private List<BlackBean> mDatas;
     private BlackDao mDao;
     private CallSmsSafeAdapter mAdapter;
+    private LinearLayout mLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +64,39 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private void initView() {
         mIv = (ImageView) findViewById(R.id.css_iv_add);
         mListView = (ListView) findViewById(R.id.css_listview);
+        mLoading = (LinearLayout) findViewById(R.id.css_ll_loading);
     }
 
     private void initData() {
-        // 查询所有数据
-        mDatas = mDao.findAll();
-        // 实现adapter--》List<数据>-->item条目
-        mAdapter = new CallSmsSafeAdapter();
-        mListView.setAdapter(mAdapter);
+        // 在耗时操作前，显示加载的进度
+        mLoading.setVisibility(View.VISIBLE);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 查询所有数据
+                mDatas = mDao.findAll();
+
+                // 模拟延时操作
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // UI操作，需要回归主线程
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 耗时操作后，隐藏进度
+                        mLoading.setVisibility(View.GONE);
+                        // 实现adapter--》List<数据>-->item条目
+                        mAdapter = new CallSmsSafeAdapter();
+                        mListView.setAdapter(mAdapter);
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
