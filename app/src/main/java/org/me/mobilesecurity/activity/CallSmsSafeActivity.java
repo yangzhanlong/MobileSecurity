@@ -26,7 +26,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private static final int REQUEST_ADD = 100;
     private static final int REQUEST_UPDATE = 200;
     private ListView mListView;
-    private ImageView mIv;
+    private ImageView mIv, mIvEmpty;
     private List<BlackBean> mDatas;
     private BlackDao mDao;
     private CallSmsSafeAdapter mAdapter;
@@ -65,6 +65,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
         mIv = (ImageView) findViewById(R.id.css_iv_add);
         mListView = (ListView) findViewById(R.id.css_listview);
         mLoading = (LinearLayout) findViewById(R.id.css_ll_loading);
+        mIvEmpty = (ImageView) findViewById(R.id.css_iv_empty);
     }
 
     private void initData() {
@@ -152,7 +153,14 @@ public class CallSmsSafeActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return mDatas.size();
+            if (mDatas != null) {
+                // 提示的空view
+                mIvEmpty.setVisibility(mDatas.size() == 0 ? View.VISIBLE : View.GONE);
+                return mDatas.size();
+            }
+            // 提示的空view可见
+            mIvEmpty.setVisibility(View.VISIBLE);
+            return 0;
         }
 
         @Override
