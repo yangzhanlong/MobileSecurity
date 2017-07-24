@@ -29,6 +29,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:scaleType="center"
+        android:onClick="btn_iv_delete"
         android:src="@drawable/btn_delete_selector" />
 
 </RelativeLayout>

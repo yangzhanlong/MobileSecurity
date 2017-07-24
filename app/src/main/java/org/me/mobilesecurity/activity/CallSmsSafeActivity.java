@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.me.mobilesecurity.R;
 import org.me.mobilesecurity.bean.BlackBean;
@@ -17,9 +19,11 @@ import org.me.mobilesecurity.db.BlackDao;
 
 import java.util.List;
 
-public class CallSmsSafeActivity extends AppCompatActivity implements View.OnClickListener{
+public class CallSmsSafeActivity extends AppCompatActivity
+        implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-    private static final int REQUEST_CODE = 100;
+    private static final int REQUEST_ADD = 100;
+    private static final int REQUEST_UPDATE = 200;
     private ListView mListView;
     private ImageView mIv;
     private List<BlackBean> mDatas;
@@ -33,7 +37,6 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
 
         // 创建dao对象
         mDao = new BlackDao(this);
-        mDao.add("123", 1);
 
         initView();
         initEvent();
@@ -42,6 +45,18 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
 
     private void initEvent() {
         mIv.setOnClickListener(this);
+        mListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BlackBean bean = mDatas.get(position);
+        Intent intent = new Intent(this, BlackEditActivity.class);
+        intent.setAction(BlackEditActivity.ACTION_UPDATE);
+        intent.putExtra(BlackEditActivity.KEY_NUMBER, bean.getNumber());
+        intent.putExtra(BlackEditActivity.KEY_TYPE, bean.getType());
+        intent.putExtra(BlackEditActivity.KEY_POSITION, position);
+        startActivityForResult(intent, REQUEST_UPDATE);
     }
 
     private void initView() {
@@ -68,13 +83,14 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
 
     private void clickAdd() {
         Intent intent = new Intent(this, BlackEditActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
+        intent.setAction(BlackEditActivity.ACTION_ADD);
+        startActivityForResult(intent, REQUEST_ADD);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 添加的请求返回的数据
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_ADD) {
             if (resultCode == Activity.RESULT_OK) {
                 // 获取数据
                 String number = data.getStringExtra(BlackEditActivity.KEY_NUMBER);
@@ -88,9 +104,23 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
                 // 刷新adapter
                 mAdapter.notifyDataSetChanged();
             }
+        } else if (requestCode == REQUEST_UPDATE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // 获取数据
+                int position = data.getIntExtra(BlackEditActivity.KEY_POSITION, -1);
+                int type = data.getIntExtra(BlackEditActivity.KEY_TYPE, -1);
+
+                // 更新list数据
+                BlackBean bean = mDatas.get(position);
+                bean.setType(type);
+
+                // 刷新adapter
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
+    ViewHolder holder = null;
     private class CallSmsSafeAdapter extends BaseAdapter{
 
         @Override
@@ -108,9 +138,9 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
             return position;
         }
 
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
             if (convertView == null) {
                 // 没有复用
                 // 记载布局
@@ -122,12 +152,12 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
                 // 给holder中的view  findViewById
                 holder.tvNumber = (TextView) convertView.findViewById(R.id.item_css_tv_number);
                 holder.tvType = (TextView) convertView.findViewById(R.id.item_css_tv_type);
-                holder.ivDelete = (ImageView) findViewById(R.id.item_css_iv_delete);
+                holder.ivDelete = (ImageView) convertView.findViewById(R.id.item_css_iv_delete);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            BlackBean bean = mDatas.get(position);
+            final BlackBean bean = mDatas.get(position);
             holder.tvNumber.setText(bean.getNumber());
             switch (bean.getType()) {
                 case BlackBean.TYPE_CALL:
@@ -143,6 +173,25 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
 
+            holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 数据库删除
+                    boolean success = mDao.delete(bean.getNumber());
+                    if (success) {
+                        // 删除数据(内存移除)
+                        mDatas.remove(bean);
+
+                        // 更新adapter
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(CallSmsSafeActivity.this, "删除失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
             return convertView;
         }
     }
@@ -152,4 +201,5 @@ public class CallSmsSafeActivity extends AppCompatActivity implements View.OnCli
         TextView tvType;
         ImageView ivDelete;
     }
+
 }

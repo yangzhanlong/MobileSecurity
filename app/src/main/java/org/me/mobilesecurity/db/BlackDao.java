@@ -65,6 +65,15 @@ public class BlackDao {
 
         return list;
     }
+    public boolean delete(String number) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String whereClause = BlackDB.TableBlack.COLUMN_NUMBER + "=?";
+        String[] whereArgs = new String[] { number };
+        int delete = db.delete(BlackDB.TableBlack.TABLE_NAME, whereClause,
+                whereArgs);
+        db.close();
+        return delete != 0;
+    }
 
     // 根据号码查找类型
     public int findType(String number) {
