@@ -93,4 +93,41 @@ public class BlackDao {
 
         return type;
     }
+
+    public List<BlackBean> findPart(int pageSize, int index) {
+        // select * from black limit 10 offset 20;
+
+        // limit:查询的数量
+        // offset:从第几条查询
+        List<BlackBean> list = new ArrayList<BlackBean>();
+
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        String sql = "select " + BlackDB.TableBlack.COLUMN_NUMBER + ","
+                + BlackDB.TableBlack.COLUMN_TYPE + " from "
+                + BlackDB.TableBlack.TABLE_NAME + " limit " + pageSize
+                + " offset " + index;
+
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null) {
+
+            while (cursor.moveToNext()) {
+                String number = cursor.getString(0);
+                int type = cursor.getInt(1);
+
+                BlackBean bean = new BlackBean();
+                bean.setNumber(number);
+                bean.setType(type);
+
+                list.add(bean);
+            }
+            // 关闭
+            cursor.close();
+        }
+
+        db.close();
+
+        return list;
+
+    }
 }

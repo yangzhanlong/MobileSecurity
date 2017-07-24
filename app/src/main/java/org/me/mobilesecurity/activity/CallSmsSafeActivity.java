@@ -31,6 +31,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private BlackDao mDao;
     private CallSmsSafeAdapter mAdapter;
     private LinearLayout mLoading;
+    private int mPageSize = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,10 @@ public class CallSmsSafeActivity extends AppCompatActivity
             @Override
             public void run() {
                 // 查询所有数据
-                mDatas = mDao.findAll();
+                // mDatas = mDao.findAll();
+
+                // 查询部分
+                mDatas = mDao.findPart(mPageSize, 0);
 
                 // 模拟延时操作
                 try {
