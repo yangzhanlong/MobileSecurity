@@ -114,7 +114,17 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             case 1:
                 clickSrlj();
                 break;
+            case 7:
+                clickcygj();
+                break;
+            default:
+                break;
         }
+    }
+
+    private void clickcygj() {
+        Intent intent = new Intent(this, CommonToolActivity.class);
+        startActivity(intent);
     }
 
     // 点击手机防盗

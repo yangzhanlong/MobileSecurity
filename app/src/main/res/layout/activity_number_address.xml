@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_number_address"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.me.mobilesecurity.activity.NumberAddressActivity">
+
+
+    <TextView
+        style="@style/TitleBarStyle"
+        android:text="号码归属地查询" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/edit_selector"
+        android:hint="请输入号码"
+        android:singleLine="true" />
+
+    <Button
+        style="@style/BtnOkNormal"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:text="查询" />
+
+    <TextView
+        style="@style/TextNormal"
+        android:layout_margin="8dp"
+        android:text="归属地:" />
+</LinearLayout>

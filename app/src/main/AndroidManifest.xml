@@ -95,6 +95,9 @@
             android:name=".services.CallSmsSafeService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".activity.CommonToolActivity" />
+        <activity android:name=".activity.NumberAddressActivity"></activity>
     </application>
 
 </manifest>
