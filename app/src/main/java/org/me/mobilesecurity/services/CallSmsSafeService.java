@@ -104,7 +104,7 @@ public class CallSmsSafeService extends Service {
                 if (type == BlackBean.TYPE_CALL || type == BlackBean.TYPE_ALL) {
                     // 通过代码去挂断电话
                     Log.d(TAG, "通过代码去挂断" + incomingNumber + "电话");
-                    //endCall();
+                    //endCall(incomingNumber);
                 }
             }
         }
@@ -112,8 +112,11 @@ public class CallSmsSafeService extends Service {
 
     /**
      * 挂断电话
+     *
+     * @param incomingNumber
+     *            ：来电号码
      */
-//    private void endCall() {
+//    private void endCall(final String incomingNumber) {
 //        // 1) ITelephony 实例
 //        // a. ITelephony.aidl添加到代码中--》ITelephony.java
 //        ITelephony iTelephony = null;
@@ -123,11 +126,9 @@ public class CallSmsSafeService extends Service {
 //        // .getService(Context.TELEPHONY_SERVICE);
 //        try {
 //            // 获取到ServiceManager 的类名
-//            Class<?> clazz = Class
-//                    .forName("android.os.ServiceManager");
+//            Class<?> clazz = Class.forName("android.os.ServiceManager");
 //            // 暴力反射（第一个参数：表示方法名字，第二个参数：表示方法的类型）
-//            Method method = clazz.getMethod("getService",
-//                    String.class);
+//            Method method = clazz.getMethod("getService", String.class);
 //            // 调用当前的方法（第一个参数：表示谁调用当前方法）
 //            IBinder ibinder = (IBinder) method.invoke(null,
 //                    Context.TELEPHONY_SERVICE);
@@ -135,6 +136,29 @@ public class CallSmsSafeService extends Service {
 //
 //            // 2) ITelephony.endCall();挂断电话
 //            iTelephony.endCall();// 异步操作
+//            // 通过线程睡一会(不推荐)
+//            // Thread.sleep(300);
+//
+//            // 删除通话记录
+//            final ContentResolver cr = getContentResolver();
+//            final Uri url = CallLog.Calls.CONTENT_URI;
+//
+//            // content://calls
+//            // content://calls/1/100
+//            // notifyForDescendents: true
+//            // -->url下面的任何分支发生改变，都会通知对应的observer
+//            // fasle-->只通知当前的url
+//            cr.registerContentObserver(url, true, new ContentObserver(
+//                    new Handler()) {
+//                @Override
+//                public void onChange(boolean selfChange) {
+//                    String where = CallLog.Calls.NUMBER + "=?";
+//                    String[] selectionArgs = new String[] { incomingNumber };
+//                    cr.delete(url, where, selectionArgs);
+//                    // 注销
+//                    cr.unregisterContentObserver(this);
+//                }
+//            });
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
