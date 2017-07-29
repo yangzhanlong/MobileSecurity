@@ -22,6 +22,7 @@
     </org.me.mobilesecurity.view.SettingItemView>
 
     <org.me.mobilesecurity.view.SettingItemView
+        android:id="@+id/mSivCallSmsSafe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         itheima:sivText="骚扰拦截设置"

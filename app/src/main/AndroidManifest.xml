@@ -15,14 +15,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,7 +86,12 @@
             android:exported="true" />
 
         <activity android:name=".activity.CallSmsSafeActivity" />
-        <activity android:name=".activity.BlackEditActivity"></activity>
+        <activity android:name=".activity.BlackEditActivity" />
+
+        <service
+            android:name=".services.CallSmsSafeService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

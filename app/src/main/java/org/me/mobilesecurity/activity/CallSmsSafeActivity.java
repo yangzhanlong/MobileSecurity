@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -21,7 +23,7 @@ import org.me.mobilesecurity.db.BlackDao;
 import java.util.List;
 
 public class CallSmsSafeActivity extends AppCompatActivity
-        implements View.OnClickListener, AdapterView.OnItemClickListener{
+        implements View.OnClickListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
     private static final int REQUEST_ADD = 100;
     private static final int REQUEST_UPDATE = 200;
@@ -32,6 +34,10 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private CallSmsSafeAdapter mAdapter;
     private LinearLayout mLoading;
     private int mPageSize = 20;
+
+    private boolean isLoadingMore;// 用来标记是否是正在加载更多
+    private boolean isLoadAll;// 用来标记是否是加载所有数据
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
     private void initEvent() {
         mIv.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
+        mListView.setOnScrollListener(this);
     }
 
     @Override
@@ -67,6 +74,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
         mListView = (ListView) findViewById(R.id.css_listview);
         mLoading = (LinearLayout) findViewById(R.id.css_ll_loading);
         mIvEmpty = (ImageView) findViewById(R.id.css_iv_empty);
+        mLoading = (LinearLayout) findViewById(R.id.css_ll_loading);
     }
 
     private void initData() {
@@ -152,7 +160,77 @@ public class CallSmsSafeActivity extends AppCompatActivity
         }
     }
 
-    ViewHolder holder = null;
+
+    // 当滑动的状态发生改变是调用
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    // 当滑动时调用
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        // firstVisibleItem:第一个可见的条目的position
+        // visibleItemCount：可见条目的数量
+        // totalItemCount:总共的条目数量
+        if (mAdapter == null || mDatas == null) {
+            return;
+        }
+
+        // 获得最后一个可见的条目
+        int lastVisiblePosition = mListView.getLastVisiblePosition();
+
+        // 如果滑动到底部
+        if (lastVisiblePosition == mAdapter.getCount() - 1) {
+            // 如果正在加载更多，不继续执行
+            if (isLoadingMore) {
+                return;
+            }
+
+            // 如果已经加载完成，不继续加载
+            if (isLoadAll) {
+                return;
+            }
+
+            // 开始加载更多了
+            Log.d("CallSmsSafeActivity", "开始加载更多了");
+            isLoadingMore = true;
+            mLoading.setVisibility(View.VISIBLE);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 加载更多的数据
+                    final List<BlackBean> part = mDao.findPart(mPageSize,
+                            mAdapter.getCount());
+
+                    if (part == null || part.size() < mPageSize) {
+                        isLoadAll = true;
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoading.setVisibility(View.GONE);
+                            // 添加部分
+                            mDatas.addAll(part);
+                            // UI更新
+                            mAdapter.notifyDataSetChanged();
+                            // 加载更多结束
+                            isLoadingMore = false;
+                        }
+                    });
+                }
+            }).start();
+
+        }
+
+    }
+
     private class CallSmsSafeAdapter extends BaseAdapter{
 
         @Override
@@ -180,6 +258,7 @@ public class CallSmsSafeActivity extends AppCompatActivity
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
             if (convertView == null) {
                 // 没有复用
                 // 记载布局
