@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.me.mobilesecurity.R;
 import org.me.mobilesecurity.utils.Config;
+import org.me.mobilesecurity.utils.GZipUtils;
 import org.me.mobilesecurity.utils.PackageUtils;
 import org.me.mobilesecurity.utils.PreferenceUtils;
 import org.me.mobilesecurity.utils.StreamUtils;
@@ -80,6 +82,31 @@ public class SplashActivity extends AppCompatActivity {
             checkVersionUpdate();
         } else {
             loadToHome();
+        }
+
+        // 加载归属地数据库
+        copyNumberAddressDB();
+    }
+
+    /**
+     * 拷贝归属地数据库
+     */
+    private void copyNumberAddressDB() {
+        File file = new File(getFilesDir(), "address.db");
+        if (file.exists()) {
+            return;
+        }
+
+        AssetManager assets = getAssets();
+        try {
+            InputStream in = assets.open("address.zip");
+            FileOutputStream fso = new FileOutputStream(file);
+
+            // 解压
+            GZipUtils.unzip(in, fso);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

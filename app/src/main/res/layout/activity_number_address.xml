@@ -13,6 +13,7 @@
         android:text="号码归属地查询" />
 
     <EditText
+        android:id="@+id/na_et_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -21,12 +22,14 @@
         android:singleLine="true" />
 
     <Button
+        android:id="@+id/na_btn_query"
         style="@style/BtnOkNormal"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:text="查询" />
 
     <TextView
+        android:id="@+id/na_tv_address"
         style="@style/TextNormal"
         android:layout_margin="8dp"
         android:text="归属地:" />
