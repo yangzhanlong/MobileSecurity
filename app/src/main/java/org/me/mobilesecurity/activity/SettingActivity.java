@@ -7,6 +7,7 @@ import android.view.View;
 
 import org.me.mobilesecurity.R;
 import org.me.mobilesecurity.services.CallSmsSafeService;
+import org.me.mobilesecurity.services.NumberAddressService;
 import org.me.mobilesecurity.utils.Config;
 import org.me.mobilesecurity.utils.PreferenceUtils;
 import org.me.mobilesecurity.utils.ServiceStateUtils;
@@ -16,6 +17,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private SettingItemView mSivAutoUpdate;
     private SettingItemView mSivCallSmsSafe;
+    private SettingItemView mSivNumberAddress;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +29,32 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         initEvent();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // 初始化显示骚扰拦截服务的状态
+        mSivCallSmsSafe.setToggleState(ServiceStateUtils.isServiceRunning(this,
+                CallSmsSafeService.class));
+
+        mSivNumberAddress.setToggleState(ServiceStateUtils.isServiceRunning(this,
+                NumberAddressService.class));
+    }
+
     private void initView() {
         mSivAutoUpdate = (SettingItemView) findViewById(R.id.setting_siv_autoupdate);
         mSivCallSmsSafe = (SettingItemView) findViewById(R.id.mSivCallSmsSafe);
+        mSivNumberAddress = (SettingItemView) findViewById(R.id.setting_siv_number_address);
 
         // 校验自动更新的状态
         mSivAutoUpdate.setToggleState(PreferenceUtils.getBoolean(
                 SettingActivity.this, Config.KEY_AUTO_UPDATE, true));
+
     }
 
     private void initEvent() {
         mSivAutoUpdate.setOnClickListener(this);
         mSivCallSmsSafe.setOnClickListener(this);
+        mSivNumberAddress.setOnClickListener(this);
     }
 
     @Override
@@ -50,8 +66,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.mSivCallSmsSafe:
                 clickCallSmsSafe();
                 break;
+            case R.id.setting_siv_number_address:
+                clickNumberAddress();
+                break;
+            default:break;
         }
     }
+
 
     /**
      * 点击自动更新的开关操作
@@ -78,6 +99,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, CallSmsSafeService.class);
             startService(intent);
             mSivCallSmsSafe.setToggleState(true);
+        }
+    }
+
+    private void clickNumberAddress() {
+        // 如果服务开启，就关闭，否则相反
+        if (ServiceStateUtils.isServiceRunning(this, NumberAddressService.class)) {
+            Intent intent = new Intent(this, NumberAddressService.class);
+            stopService(intent);
+            mSivNumberAddress.setToggleState(false);
+        } else {
+            Intent intent = new Intent(this, NumberAddressService.class);
+            startService(intent);
+            mSivNumberAddress.setToggleState(true);
         }
     }
 }

@@ -114,7 +114,9 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * 拷贝常用号码数据库
+     */
     private void copyCommonNumberDB() {
         File file = new File(getFilesDir(), "commonnum.db");
         if (file.exists()) {

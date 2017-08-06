@@ -35,4 +35,13 @@
         itheima:sivText="锁屏自动清理内存"
         itheima:sivBackground="end">
     </org.me.mobilesecurity.view.SettingItemView>
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:id="@+id/setting_siv_number_address"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:sivText="归属地显示设置"
+        itheima:sivBackground="start">
+    </org.me.mobilesecurity.view.SettingItemView>
 </LinearLayout>
