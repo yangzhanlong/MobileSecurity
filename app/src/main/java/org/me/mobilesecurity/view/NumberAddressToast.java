@@ -3,6 +3,7 @@ package org.me.mobilesecurity.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -12,10 +13,13 @@ import org.me.mobilesecurity.R;
 /**
  * 自定义的号码归属地显示Toast
  */
-public class NumberAddressToast {
+public class NumberAddressToast implements View.OnTouchListener{
     private WindowManager mWM;
     private View mView;
     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+
+    float mDownX;
+    float mDownY;
 
     public NumberAddressToast(Context context) {
         // 初始化WindowManager
@@ -28,11 +32,13 @@ public class NumberAddressToast {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         params.format = PixelFormat.TRANSLUCENT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE; // 可以触摸
         params.setTitle("Toast");
+
+        // 监听toast触摸事件
+        mView.setOnTouchListener(this);
     }
 
     public void show(String address) {
@@ -49,5 +55,38 @@ public class NumberAddressToast {
         if (mView.getParent() != null) {
             mWM.removeView(mView);
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = event.getRawX();
+                mDownY = event.getRawY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float moveX = event.getRawX();
+                float moveY = event.getRawY();
+
+                float diffX = moveX - mDownX;
+                float diffY = moveY - mDownY;
+
+                mParams.x += diffX;
+                mParams.y += diffY;
+
+                // 更新toast位置
+                mWM.updateViewLayout(mView, mParams);
+
+                mDownX = moveX;
+                mDownY = moveY;
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            default:
+                break;
+        }
+
+
+        return false;
     }
 }
