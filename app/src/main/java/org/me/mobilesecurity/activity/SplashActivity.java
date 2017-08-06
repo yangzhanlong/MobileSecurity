@@ -86,7 +86,11 @@ public class SplashActivity extends AppCompatActivity {
 
         // 加载归属地数据库
         copyNumberAddressDB();
+        
+        // 加载常用号码数据库
+        copyCommonNumberDB();
     }
+
 
     /**
      * 拷贝归属地数据库
@@ -107,6 +111,33 @@ public class SplashActivity extends AppCompatActivity {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void copyCommonNumberDB() {
+        File file = new File(getFilesDir(), "commonnum.db");
+        if (file.exists()) {
+            return;
+        }
+
+        InputStream in = null;
+        FileOutputStream fso = null;
+        AssetManager assets = getAssets();
+        try {
+            in = assets.open("commonnum.db");
+            fso = new FileOutputStream(file);
+
+            int len = -1;
+            byte[] buffer = new byte[1024];
+            while ((len = in.read(buffer)) != -1 ) {
+                fso.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            StreamUtils.closeIO(in);
+            StreamUtils.closeIO(fso);
         }
     }
 

@@ -10,6 +10,7 @@ import org.me.mobilesecurity.view.SettingItemView;
 
 public class CommonToolActivity extends AppCompatActivity implements View.OnClickListener{
     private SettingItemView mSivNumberAddress;
+    private SettingItemView mSivCommonNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,12 @@ public class CommonToolActivity extends AppCompatActivity implements View.OnClic
 
     private void initView() {
         mSivNumberAddress = (SettingItemView) findViewById(R.id.ct_siv_number_address);
+        mSivCommonNumber = (SettingItemView) findViewById(R.id.ct_siv_common_number);
     }
 
     private void initEvent() {
         mSivNumberAddress.setOnClickListener(this);
+        mSivCommonNumber.setOnClickListener(this);
     }
 
     @Override
@@ -34,10 +37,17 @@ public class CommonToolActivity extends AppCompatActivity implements View.OnClic
             case R.id.ct_siv_number_address:
                 clickNumberAddress();
                 break;
+            case R.id.ct_siv_common_number:
+                clickCommonNumber();
             default:
                 break;
         }
 
+    }
+
+    private void clickCommonNumber() {
+        Intent intent = new Intent(this, CommonNumberActivity.class);
+        startActivity(intent);
     }
 
     private void clickNumberAddress() {

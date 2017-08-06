@@ -97,7 +97,8 @@
             android:exported="true" />
 
         <activity android:name=".activity.CommonToolActivity" />
-        <activity android:name=".activity.NumberAddressActivity"></activity>
+        <activity android:name=".activity.NumberAddressActivity" />
+        <activity android:name=".activity.CommonNumberActivity"></activity>
     </application>
 
 </manifest>
