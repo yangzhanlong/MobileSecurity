@@ -8,10 +8,9 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.me.mobilesecurity.db.NumberAddressDao;
+import org.me.mobilesecurity.view.NumberAddressToast;
 
 import static org.me.mobilesecurity.db.NumberAddressDao.findAddress;
 
@@ -19,6 +18,7 @@ public class NumberAddressService extends Service {
     private CallInListten listten;
     private TelephonyManager tm;
     private CallOutReceiver mReceiver;
+    private NumberAddressToast mAddressToast;
 
     public NumberAddressService() {
     }
@@ -31,6 +31,9 @@ public class NumberAddressService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 构造toast对象
+        mAddressToast = new NumberAddressToast(this);
 
         // 1. 电话拨入时，显示拨入号码的归属地
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
@@ -65,7 +68,10 @@ public class NumberAddressService extends Service {
             // 响铃时显示归属地
             if (state == TelephonyManager.CALL_STATE_RINGING) {
                 String address = findAddress(NumberAddressService.this, incomingNumber);
-                Toast.makeText(NumberAddressService.this, address, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(NumberAddressService.this, address, Toast.LENGTH_SHORT).show();
+                mAddressToast.show(address);
+            } else if (state == TelephonyManager.CALL_STATE_IDLE) {
+                mAddressToast.hide();
             }
         }
     }
@@ -77,7 +83,8 @@ public class NumberAddressService extends Service {
         public void onReceive(Context context, Intent intent) {
             String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
             String address = NumberAddressDao.findAddress(NumberAddressService.this, number);
-            Toast.makeText(NumberAddressService.this, address, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(NumberAddressService.this, address, Toast.LENGTH_SHORT).show();
+            mAddressToast.show(address);
         }
     }
 }

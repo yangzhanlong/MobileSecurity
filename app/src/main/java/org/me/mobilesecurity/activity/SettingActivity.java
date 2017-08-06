@@ -36,6 +36,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mSivCallSmsSafe.setToggleState(ServiceStateUtils.isServiceRunning(this,
                 CallSmsSafeService.class));
 
+        // 初始化显示号码归属地服务的状态
         mSivNumberAddress.setToggleState(ServiceStateUtils.isServiceRunning(this,
                 NumberAddressService.class));
     }
@@ -102,6 +103,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    // 号码归属地开关设置
     private void clickNumberAddress() {
         // 如果服务开启，就关闭，否则相反
         if (ServiceStateUtils.isServiceRunning(this, NumberAddressService.class)) {
