@@ -44,4 +44,13 @@
         itheima:sivText="归属地显示设置"
         itheima:sivBackground="start">
     </org.me.mobilesecurity.view.SettingItemView>
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:id="@+id/setting_siv_address_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:sivText="归属地风格设置"
+        itheima:sivBackground="end"
+        itheima:sivToggleEnable="false">
+    </org.me.mobilesecurity.view.SettingItemView>
 </LinearLayout>

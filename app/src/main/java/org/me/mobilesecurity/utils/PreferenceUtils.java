@@ -49,4 +49,20 @@ public class PreferenceUtils {
         editor.putString(key, value);
         editor.commit();
     }
+
+    public static int getInt(Context context, String key) {
+        return getInt(context, key, -1);
+    }
+
+    public static int getInt(Context context, String key, int defValue) {
+        SharedPreferences preferences = getPreferences(context);
+        return preferences.getInt(key, defValue);
+    }
+
+    public static void setInt(Context context, String key, int value) {
+        SharedPreferences preferences = getPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
 }

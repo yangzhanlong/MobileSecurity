@@ -62,4 +62,14 @@
         <item name="android:onClick">clickBack</item>
         <item name="android:text">上一步</item>
     </style>
+
+    <style name="addressStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowAnimationStyle">@style/addressAnimation</item>
+    </style>
+
+    <style name="addressAnimation">
+        <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
+        <item name="android:windowExitAnimation">@anim/input_method_exit</item>
+    </style>
 </resources>

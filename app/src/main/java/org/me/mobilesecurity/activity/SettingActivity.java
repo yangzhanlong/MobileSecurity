@@ -11,6 +11,7 @@ import org.me.mobilesecurity.services.NumberAddressService;
 import org.me.mobilesecurity.utils.Config;
 import org.me.mobilesecurity.utils.PreferenceUtils;
 import org.me.mobilesecurity.utils.ServiceStateUtils;
+import org.me.mobilesecurity.view.AddressStyleDialog;
 import org.me.mobilesecurity.view.SettingItemView;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
@@ -18,6 +19,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private SettingItemView mSivAutoUpdate;
     private SettingItemView mSivCallSmsSafe;
     private SettingItemView mSivNumberAddress;
+    private SettingItemView mSivAddressStyle;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mSivAutoUpdate = (SettingItemView) findViewById(R.id.setting_siv_autoupdate);
         mSivCallSmsSafe = (SettingItemView) findViewById(R.id.mSivCallSmsSafe);
         mSivNumberAddress = (SettingItemView) findViewById(R.id.setting_siv_number_address);
+        mSivAddressStyle = (SettingItemView) findViewById(R.id.setting_siv_address_style);
 
         // 校验自动更新的状态
         mSivAutoUpdate.setToggleState(PreferenceUtils.getBoolean(
@@ -56,6 +59,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mSivAutoUpdate.setOnClickListener(this);
         mSivCallSmsSafe.setOnClickListener(this);
         mSivNumberAddress.setOnClickListener(this);
+        mSivAddressStyle.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +73,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.setting_siv_number_address:
                 clickNumberAddress();
+                break;
+            case R.id.setting_siv_address_style:
+                clickAddressStyle();
                 break;
             default:break;
         }
@@ -115,5 +122,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             startService(intent);
             mSivNumberAddress.setToggleState(true);
         }
+    }
+
+
+    private void clickAddressStyle() {
+        AddressStyleDialog dialog = new AddressStyleDialog(this);
+        dialog.show();
     }
 }

@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.me.mobilesecurity.R;
+import org.me.mobilesecurity.utils.Config;
+import org.me.mobilesecurity.utils.PreferenceUtils;
 
 /**
  * 自定义的号码归属地显示Toast
@@ -16,12 +18,14 @@ import org.me.mobilesecurity.R;
 public class NumberAddressToast implements View.OnTouchListener{
     private WindowManager mWM;
     private View mView;
+    private Context mContext;
     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
 
     float mDownX;
     float mDownY;
 
     public NumberAddressToast(Context context) {
+        this.mContext = context;
         // 初始化WindowManager
         mWM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -45,6 +49,14 @@ public class NumberAddressToast implements View.OnTouchListener{
         if (mView.getParent() != null) {
             mWM.removeView(mView);
         }
+
+        // 设置样式
+        int style = PreferenceUtils.getInt(mContext, Config.KEY_ADDRESS_STYLE, -1);
+        if (style == -1) {
+            style = R.drawable.toast_normal;
+        }
+        mView.setBackgroundResource(style);
+
         TextView tv = (TextView) mView.findViewById(R.id.toast_tv_location);
         tv.setText(address);
 

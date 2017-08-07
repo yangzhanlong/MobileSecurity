@@ -10,4 +10,5 @@ public interface Config {
     String KEY_SJFD_SIM = "sjfd_sim";
     String KEY_SJFD_NUM = "sjfd_num";
     String KEY_SJFD_PROTECT = "sjfd_protect";
+    String KEY_ADDRESS_STYLE = "address_style";
 }
