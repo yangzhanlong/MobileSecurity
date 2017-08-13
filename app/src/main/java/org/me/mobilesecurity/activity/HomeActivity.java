@@ -114,12 +114,28 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             case 1:
                 clickSrlj();
                 break;
+            case 2:
+                clickRjgj();
+                break;
+            case 3:
+                clickJcgl();
+                break;
             case 7:
                 clickcygj();
                 break;
             default:
                 break;
         }
+    }
+
+    private void clickJcgl() {
+        Intent intent = new Intent(this, ProcessManagerActivity.class);
+        startActivity(intent);
+    }
+
+    private void clickRjgj() {
+        Intent intent = new Intent(this, AppManagerActivity.class);
+        startActivity(intent);
     }
 
     private void clickcygj() {
