@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import org.me.mobilesecurity.R;
+import org.me.mobilesecurity.services.AutoCleanService;
 import org.me.mobilesecurity.services.CallSmsSafeService;
 import org.me.mobilesecurity.services.NumberAddressService;
 import org.me.mobilesecurity.utils.Config;
@@ -20,6 +21,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private SettingItemView mSivCallSmsSafe;
     private SettingItemView mSivNumberAddress;
     private SettingItemView mSivAddressStyle;
+    private SettingItemView mSivAutoClean;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         // 初始化显示号码归属地服务的状态
         mSivNumberAddress.setToggleState(ServiceStateUtils.isServiceRunning(this,
                 NumberAddressService.class));
+
+        // 初始化自动清理内存的服务
+        mSivAutoClean.setToggleState(ServiceStateUtils.isServiceRunning(this,
+                AutoCleanService.class));
     }
 
     private void initView() {
@@ -53,6 +59,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mSivAutoUpdate.setToggleState(PreferenceUtils.getBoolean(
                 SettingActivity.this, Config.KEY_AUTO_UPDATE, true));
 
+        mSivAutoClean = (SettingItemView) findViewById(R.id.setting_siv_autoclean);
+
     }
 
     private void initEvent() {
@@ -60,6 +68,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mSivCallSmsSafe.setOnClickListener(this);
         mSivNumberAddress.setOnClickListener(this);
         mSivAddressStyle.setOnClickListener(this);
+        mSivAutoClean.setOnClickListener(this);
     }
 
     @Override
@@ -77,7 +86,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.setting_siv_address_style:
                 clickAddressStyle();
                 break;
-            default:break;
+            case R.id.setting_siv_autoclean:
+                clickAutoClean();
+                break;
+            default:
+                break;
         }
     }
 
@@ -124,9 +137,27 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
     private void clickAddressStyle() {
         AddressStyleDialog dialog = new AddressStyleDialog(this);
         dialog.show();
+    }
+
+    private void clickAutoClean() {
+        // 开启服务或是关闭服务
+        if (ServiceStateUtils.isServiceRunning(this, AutoCleanService.class)) {
+            // 就关闭
+            Intent service = new Intent(this, AutoCleanService.class);
+            stopService(service);
+
+            // ui
+            mSivAutoClean.setToggleState(false);
+        } else {
+            // 开启
+            Intent service = new Intent(this, AutoCleanService.class);
+            startService(service);
+
+            // ui
+            mSivAutoClean.setToggleState(true);
+        }
     }
 }
