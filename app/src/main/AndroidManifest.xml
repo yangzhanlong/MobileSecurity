@@ -190,6 +190,9 @@
             android:name=".activity.ProcessManagerActivity"
             android:process=":process">
         </activity>
+
+        <service android:name=".services.AutoCleanService" />
+        <service android:name=".services.ProtectingService" />
     </application>
 
 </manifest>

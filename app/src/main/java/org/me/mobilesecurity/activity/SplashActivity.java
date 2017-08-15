@@ -25,10 +25,12 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.me.mobilesecurity.R;
+import org.me.mobilesecurity.services.ProtectingService;
 import org.me.mobilesecurity.utils.Config;
 import org.me.mobilesecurity.utils.GZipUtils;
 import org.me.mobilesecurity.utils.PackageUtils;
 import org.me.mobilesecurity.utils.PreferenceUtils;
+import org.me.mobilesecurity.utils.ServiceStateUtils;
 import org.me.mobilesecurity.utils.StreamUtils;
 
 import java.io.File;
@@ -89,6 +91,11 @@ public class SplashActivity extends AppCompatActivity {
         
         // 加载常用号码数据库
         copyCommonNumberDB();
+
+        // 开启服务
+        if (!ServiceStateUtils.isServiceRunning(this, ProtectingService.class)) {
+            startService(new Intent(this, ProtectingService.class));
+        }
     }
 
 
