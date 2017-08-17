@@ -120,12 +120,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             case 3:
                 clickJcgl();
                 break;
+            case 4:
+                clickLltj();
+                break;
             case 7:
                 clickcygj();
                 break;
             default:
                 break;
         }
+    }
+
+    private void clickLltj() {
+        Intent intent = new Intent(this, TrafficActivity.class);
+        startActivity(intent);
     }
 
     private void clickJcgl() {
