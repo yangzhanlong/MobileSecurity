@@ -30,4 +30,21 @@
         app:sivText="常用号码查询"
         app:sivToggleEnable="false" />
 
+    <org.me.mobilesecurity.view.SettingItemView
+        android:layout_marginTop="10dp"
+        android:id="@+id/ct_siv_sms_backup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sivBackground="start"
+        app:sivText="短信备份"
+        app:sivToggleEnable="false" />
+
+    <org.me.mobilesecurity.view.SettingItemView
+        android:id="@+id/ct_siv_sms_restore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sivBackground="end"
+        app:sivText="短信还原"
+        app:sivToggleEnable="false" />
+
 </LinearLayout>
