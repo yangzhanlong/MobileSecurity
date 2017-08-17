@@ -188,11 +188,27 @@
         <activity android:name=".activity.AppManagerActivity" />
         <activity
             android:name=".activity.ProcessManagerActivity"
-            android:process=":process">
-        </activity>
+            android:process=":process" />
 
         <service android:name=".services.AutoCleanService" />
         <service android:name=".services.ProtectingService" />
+        <service
+            android:name=".services.ProcessService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.KillProcessService"
+            android:exported="false"></service>
+
+        <receiver android:name=".receiver.ProcessWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/process_widget_provider" />
+        </receiver>
     </application>
 
 </manifest>
