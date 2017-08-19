@@ -437,5 +437,4 @@ public class ProcessManagerActivity extends Activity implements
         TextView tvProcessName;
         TextView tvProcessSize;
     }
-    
 }
